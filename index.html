@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="180">
+<title>Ys — Live System Overview</title><style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0d13;color:#e6e8eb;font:15px/1.55 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:30px 22px 90px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.dim{color:#8a93a6} .c{text-align:right}
+h1{font-size:30px;margin:0 0 2px;letter-spacing:-.5px}
+.tagline{color:#9aa3b2;font-size:15px;margin:0 0 14px}
+.pillrow{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0 24px;align-items:center}
+.badge{display:inline-flex;gap:7px;align-items:center;border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600}
+.b-safe{background:#16321f;color:#5fce8f} .b-tier{background:#1a2233;color:#8fb3e6}
+.b-neutral{background:#1a1e29;color:#9aa3b2}
+.live{display:inline-flex;gap:7px;align-items:center;background:#241016;color:#ff6b81;border-radius:999px;padding:6px 13px;font-size:13px;font-weight:700}
+.live .dot{width:8px;height:8px;border-radius:50%;background:#ff5470;animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.sec{margin:32px 0 12px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7d8598;font-weight:700}
+.card{background:#111420;border:1px solid #222839;border-radius:15px;padding:20px}
+.reality{background:#221a10;border:1px solid #6b5416;color:#f0c46a;border-radius:14px;padding:16px 18px;font-size:14.5px;line-height:1.5}
+.reality b{color:#ffd98a}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+.kpi{background:#111420;border:1px solid #222839;border-radius:14px;padding:15px 16px}
+.kpi b{font-size:26px;display:block;line-height:1.1} .kpi span{color:#8a93a6;font-size:12.5px}
+.flow{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px}
+.node{flex:0 0 auto;background:#141926;border:1px solid #232a3a;border-radius:12px;padding:11px 12px;min-width:98px;text-align:center}
+.node .ic{font-size:19px} .node .nn{font-weight:700;font-size:12.5px;margin-top:3px} .node .ns{color:#8a93a6;font-size:10.5px}
+.arrow{display:flex;align-items:center;color:#3d4658;font-size:16px}
+.arch{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:760px){.arch{grid-template-columns:1fr}}
+.layer{background:#111420;border:1px solid #222839;border-radius:14px;padding:16px}
+.layer h3{margin:0 0 4px;font-size:15px} .layer .sub{color:#8a93a6;font-size:12px;margin-bottom:10px}
+.layer ul{margin:0;padding-left:16px} .layer li{font-size:13px;margin:3px 0;color:#c3c9d4}
+.lc{border-color:#2a3a55} .lc h3{color:#8fb3e6}
+.lm{border-color:#4a3a20} .lm h3{color:#e6c079}
+.lp{border-color:#274a34} .lp h3{color:#6fce9a}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+td,th{padding:7px 9px;border-bottom:1px solid #1c2230;text-align:left}
+th{color:#8a93a6;font-weight:600;font-size:12px}
+.bar{width:32%} .bar span{display:block;height:8px;border-radius:5px}
+.tag{color:#8a93a6;font-size:11.5px}
+.pill{border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600;white-space:nowrap}
+.heat{border-collapse:separate;border-spacing:3px;font-size:11px;width:auto;margin:0 auto}
+.heat th{padding:4px;color:#8a93a6;font-size:11px;text-align:center}
+.heat th.rh{text-align:right;padding-right:7px}
+.heat td{width:44px;height:34px;text-align:center;border:none;border-radius:5px;font-family:ui-monospace,monospace;font-size:11px}
+.peq{font-size:24px;font-weight:800} .peq span{font-size:14px}
+.chip{display:inline-block;background:#141926;border:1px solid #232a3a;border-radius:8px;padding:5px 10px;margin:3px 4px 0 0;font-size:12.5px}
+.ladder{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.rung{flex:1;min-width:150px;background:#111420;border:1px solid #222839;border-radius:11px;padding:11px 13px;font-size:12.5px}
+.rung b{font-size:13.5px} .rung.now{border-color:#5fce8f;background:#12251a} .rung.now b{color:#6fce9a}
+.legend{font-size:11.5px;color:#8a93a6;margin-top:8px;display:flex;gap:14px;flex-wrap:wrap}
+.sw{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+.foot{color:#5a6472;font-size:12px;margin-top:36px;border-top:1px solid #222839;padding-top:14px;line-height:1.6}
+</style></head><body><div class="wrap">
+
+<h1>Ys — Autonomous Follow-Along Trading System</h1>
+<p class="tagline">A self-operating quant desk: it scouts traders &amp; signals, builds strategies, scores them against luck, and paper-trades them live — logging every decision like a trader gaining experience.</p>
+<div class="pillrow">
+  <span class="live"><span class="dot"></span>LIVE · auto-refresh 3 min</span>
+  <span class="badge b-safe">● T0 · PAPER · $0 real</span>
+  <span class="badge b-tier">Autonomy 0 of 4</span>
+  <span class="badge b-neutral">updated 2026-07-23 16:27:30</span>
+</div>
+
+<div class="reality">
+⚠️ <b>Honest headline first.</b> The strategy book scores well on history (Sharpe 0.66, 9 near-uncorrelated sleeves) — but it does <b>not</b> yet survive the Deflated-Sharpe test that prices in how many signals we tried. In plain terms: <b>the in-sample record is consistent with luck, not proven skill.</b> That's not a bug — it's the desk's own skeptic catching itself. The real verdict comes from the live paper accounts + an out-of-sample follow maturing <b>~mid-October 2026</b>. No real money moves until it earns it and Josiah signs off.
+</div>
+
+<div class="sec">The system, end to end</div>
+<div class="flow"><div class="node"><div class="ic">🔭</div><div class="nn">Scout</div><div class="ns">find edges</div></div><div class=arrow>→</div><div class="node"><div class="ic">🛠️</div><div class="nn">Build</div><div class="ns">code sleeve</div></div><div class=arrow>→</div><div class="node"><div class="ic">🧪</div><div class="nn">Audition</div><div class="ns">score vs null</div></div><div class=arrow>→</div><div class="node"><div class="ic">🧮</div><div class="nn">Ensemble</div><div class="ns">combine+dedupe</div></div><div class=arrow>→</div><div class="node"><div class="ic">🛡️</div><div class="nn">DSR gate</div><div class="ns">kill luck</div></div><div class=arrow>→</div><div class="node"><div class="ic">📈</div><div class="nn">Paper trade</div><div class="ns">stocks+futures</div></div><div class=arrow>→</div><div class="node"><div class="ic">🧠</div><div class="nn">Persist</div><div class="ns">write to memory</div></div><div class=arrow>→</div><div class="node"><div class="ic">⏳</div><div class="nn">OOS test</div><div class="ns">the real one ~Oct</div></div></div>
+
+<div class="sec">Architecture — three layers</div>
+<div class="arch">
+  <div class="layer lc"><h3>☁️ Yggdrasil — the brain</h3><div class="sub">cloud reasoning loop</div>
+    <ul><li>Bull/bear debate + conviction scoring</li><li>Decides what to build &amp; follow next</li><li>Adversarial self-review (cheap-model referees)</li><li>Reads results → queues the next move</li></ul></div>
+  <div class="layer lm"><h3>📚 Ohara — the memory</h3><div class="sub">the living library</div>
+    <ul><li>Every decision, lesson &amp; trial logged</li><li>Source scorecard + trade journal</li><li>Autonomy ladder &amp; rails of record</li><li>Survives across sessions — it never forgets</li></ul></div>
+  <div class="layer lp"><h3>🖥️ PC data plane — the hands</h3><div class="sub">always-on daemon</div>
+    <ul><li>Drains a work queue every ~20 min</li><li>Pulls market/filings data, runs engines</li><li>Paper-trades daily, refreshes this page</li><li>Self-refills — keeps working while away</li></ul></div>
+</div>
+
+<div class="sec">The strategy book — 9 sleeves, deliberately uncorrelated</div>
+<div class="grid3">
+  <div class="kpi"><b>0.66</b><span>book Sharpe (full history, 4,048 days)</span></div>
+  <div class="kpi"><b>0.06</b><span>avg pairwise correlation between sleeves</span></div>
+  <div class="kpi"><b>-15.5%</b><span>max drawdown · 5.6% ann return</span></div>
+</div>
+<div class="card" style="margin-top:14px">
+  <table>
+    <tr><th>Sleeve</th><th>Type</th><th>Sharpe (in-sample)</th><th class="c">Sharpe</th><th class="c">Ann</th><th class="c">MaxDD</th><th class="c">Days</th></tr>
+    <tr><td>13D activist refresh</td><td class="tag">disclosure</td><td class="bar"><span style="width:100%;background:#3ec06f"></span></td><td class="c mono">1.16</td><td class="c mono dim">+32.6%</td><td class="c mono dim">-31%</td><td class="c mono dim">593</td></tr><tr><td>TAA — Keller DAA</td><td class="tag">asset-class</td><td class="bar"><span style="width:76%;background:#3ec06f"></span></td><td class="c mono">0.88</td><td class="c mono dim">+8.6%</td><td class="c mono dim">-21%</td><td class="c mono dim">1,898</td></tr><tr><td>TAA — dual momentum (GEM)</td><td class="tag">asset-class</td><td class="bar"><span style="width:55%;background:#3ec06f"></span></td><td class="c mono">0.64</td><td class="c mono dim">+9.1%</td><td class="c mono dim">-34%</td><td class="c mono dim">3,408</td></tr><tr><td>Merger arbitrage</td><td class="tag">event</td><td class="bar"><span style="width:53%;background:#3ec06f"></span></td><td class="c mono">0.62</td><td class="c mono dim">+24.9%</td><td class="c mono dim">-58%</td><td class="c mono dim">1,506</td></tr><tr><td>Futures trend (TSMOM)</td><td class="tag">trend</td><td class="bar"><span style="width:53%;background:#3ec06f"></span></td><td class="c mono">0.61</td><td class="c mono dim">+5.7%</td><td class="c mono dim">-17%</td><td class="c mono dim">2,681</td></tr><tr><td>Analyst upgrade follow</td><td class="tag">follow</td><td class="bar"><span style="width:32%;background:#c9a24a"></span></td><td class="c mono">0.37</td><td class="c mono dim">+2.6%</td><td class="c mono dim">-9%</td><td class="c mono dim">1,505</td></tr><tr><td>Crypto X-sect momentum</td><td class="tag">crypto</td><td class="bar"><span style="width:31%;background:#c9a24a"></span></td><td class="c mono">0.36</td><td class="c mono dim">+3.0%</td><td class="c mono dim">-20%</td><td class="c mono dim">2,129</td></tr><tr><td>VCP breakout (Minervini)</td><td class="tag">price-vol</td><td class="bar"><span style="width:21%;background:#9aa3b2"></span></td><td class="c mono">0.24</td><td class="c mono dim">+2.5%</td><td class="c mono dim">-29%</td><td class="c mono dim">1,497</td></tr><tr><td>Insider cluster (Form-4)</td><td class="tag">follow</td><td class="bar"><span style="width:9%;background:#9aa3b2"></span></td><td class="c mono">0.11</td><td class="c mono dim">-7.2%</td><td class="c mono dim">-41%</td><td class="c mono dim">259</td></tr>
+  </table>
+  <p class="dim" style="font-size:12.5px;margin:12px 2px 0">Diversification is the real asset here: 9 sleeves at 0.06 correlation give a theoretical equal-risk ceiling of <b style="color:#c3c9d4">1.37</b>. We realize 0.66 — meaning the edge per sleeve is thin, and honesty demands we say so. Correlation is maxed out; the lever now is stronger individual edges + live confirmation, not more sleeves.</p>
+</div>
+
+<div class="sec">Why it holds together — sleeve correlation map</div>
+<div class="card">
+  <table class="heat"><tr><th></th><th>13D</th><th>DAA</th><th>GEM</th><th>MRG</th><th>TRD</th><th>ANL</th><th>CRY</th><th>VCP</th><th>F4</th></tr><tr><th class="rh">13D</th><td style="background:#2b3346;color:#8a93a6">1</td><td style="background:#16302a;color:#8fd6bf">-.12</td><td style="background:#183a2c;color:#9fe6c2">-.22</td><td style="background:#5a4420;color:#f0d5a8">+.26</td><td style="background:#171b26;color:#7d8598">+.00</td><td style="background:#7a3b1e;color:#ffd9c2">+.43</td><td style="background:#171b26;color:#7d8598">+.01</td><td style="background:#39362a;color:#cbc39e">+.11</td><td style="background:#39362a;color:#cbc39e">+.10</td></tr><tr><th class="rh">DAA</th><td style="background:#16302a;color:#8fd6bf">-.12</td><td style="background:#2b3346;color:#8a93a6">1</td><td style="background:#7a3b1e;color:#ffd9c2">+.62</td><td style="background:#171b26;color:#7d8598">-.02</td><td style="background:#7a3b1e;color:#ffd9c2">+.55</td><td style="background:#183a2c;color:#9fe6c2">-.35</td><td style="background:#16302a;color:#8fd6bf">-.05</td><td style="background:#171b26;color:#7d8598">-.00</td><td style="background:#39362a;color:#cbc39e">+.11</td></tr><tr><th class="rh">GEM</th><td style="background:#183a2c;color:#9fe6c2">-.22</td><td style="background:#7a3b1e;color:#ffd9c2">+.62</td><td style="background:#2b3346;color:#8a93a6">1</td><td style="background:#16302a;color:#8fd6bf">-.08</td><td style="background:#5a4420;color:#f0d5a8">+.31</td><td style="background:#183a2c;color:#9fe6c2">-.41</td><td style="background:#16302a;color:#8fd6bf">-.11</td><td style="background:#16302a;color:#8fd6bf">-.09</td><td style="background:#39362a;color:#cbc39e">+.08</td></tr><tr><th class="rh">MRG</th><td style="background:#5a4420;color:#f0d5a8">+.26</td><td style="background:#171b26;color:#7d8598">-.02</td><td style="background:#16302a;color:#8fd6bf">-.08</td><td style="background:#2b3346;color:#8a93a6">1</td><td style="background:#171b26;color:#7d8598">+.02</td><td style="background:#39362a;color:#cbc39e">+.17</td><td style="background:#171b26;color:#7d8598">+.00</td><td style="background:#171b26;color:#7d8598">+.03</td><td style="background:#171b26;color:#7d8598">-.01</td></tr><tr><th class="rh">TRD</th><td style="background:#171b26;color:#7d8598">+.00</td><td style="background:#7a3b1e;color:#ffd9c2">+.55</td><td style="background:#5a4420;color:#f0d5a8">+.31</td><td style="background:#171b26;color:#7d8598">+.02</td><td style="background:#2b3346;color:#8a93a6">1</td><td style="background:#171b26;color:#7d8598">-.01</td><td style="background:#171b26;color:#7d8598">-.03</td><td style="background:#39362a;color:#cbc39e">+.15</td><td style="background:#39362a;color:#cbc39e">+.11</td></tr><tr><th class="rh">ANL</th><td style="background:#7a3b1e;color:#ffd9c2">+.43</td><td style="background:#183a2c;color:#9fe6c2">-.35</td><td style="background:#183a2c;color:#9fe6c2">-.41</td><td style="background:#39362a;color:#cbc39e">+.17</td><td style="background:#171b26;color:#7d8598">-.01</td><td style="background:#2b3346;color:#8a93a6">1</td><td style="background:#39362a;color:#cbc39e">+.10</td><td style="background:#5a4420;color:#f0d5a8">+.26</td><td style="background:#171b26;color:#7d8598">+.02</td></tr><tr><th class="rh">CRY</th><td style="background:#171b26;color:#7d8598">+.01</td><td style="background:#16302a;color:#8fd6bf">-.05</td><td style="background:#16302a;color:#8fd6bf">-.11</td><td style="background:#171b26;color:#7d8598">+.00</td><td style="background:#171b26;color:#7d8598">-.03</td><td style="background:#39362a;color:#cbc39e">+.10</td><td style="background:#2b3346;color:#8a93a6">1</td><td style="background:#171b26;color:#7d8598">+.05</td><td style="background:#39362a;color:#cbc39e">+.09</td></tr><tr><th class="rh">VCP</th><td style="background:#39362a;color:#cbc39e">+.11</td><td style="background:#171b26;color:#7d8598">-.00</td><td style="background:#16302a;color:#8fd6bf">-.09</td><td style="background:#171b26;color:#7d8598">+.03</td><td style="background:#39362a;color:#cbc39e">+.15</td><td style="background:#5a4420;color:#f0d5a8">+.26</td><td style="background:#171b26;color:#7d8598">+.05</td><td style="background:#2b3346;color:#8a93a6">1</td><td style="background:#171b26;color:#7d8598">+.06</td></tr><tr><th class="rh">F4</th><td style="background:#39362a;color:#cbc39e">+.10</td><td style="background:#39362a;color:#cbc39e">+.11</td><td style="background:#39362a;color:#cbc39e">+.08</td><td style="background:#171b26;color:#7d8598">-.01</td><td style="background:#39362a;color:#cbc39e">+.11</td><td style="background:#171b26;color:#7d8598">+.02</td><td style="background:#39362a;color:#cbc39e">+.09</td><td style="background:#171b26;color:#7d8598">+.06</td><td style="background:#2b3346;color:#8a93a6">1</td></tr></table>
+  <div class="legend">
+    <span><span class="sw" style="background:#16302a"></span>negative (extra decorrelation)</span>
+    <span><span class="sw" style="background:#171b26"></span>≈ zero (ideal)</span>
+    <span><span class="sw" style="background:#5a4420"></span>mild positive</span>
+    <span><span class="sw" style="background:#7a3b1e"></span>notable — watched</span>
+  </div>
+  <p class="dim" style="font-size:12.5px;margin:12px 2px 0">Mostly dark = mostly independent. The few amber patches are expected (trend/asset-class cousins), and the ensemble down-weights redundancy automatically.</p>
+</div>
+
+<div class="sec">The skeptic gate — Deflated Sharpe Ratio (recomputed live)</div>
+<div class="card"><table><tr><th>Trials assumed</th><th>Deflated Sharpe</th><th class="c">DSR</th><th>Verdict</th></tr><tr><td class="mono">N = 15 (all trials)</td><td class="bar"><span style="width:3%;background:#e0524a"></span></td><td class="c mono" style="color:#e0524a">0.00</td><td class="dim">fails</td></tr><tr><td class="mono">N = 20</td><td class="bar"><span style="width:3%;background:#e0524a"></span></td><td class="c mono" style="color:#e0524a">0.00</td><td class="dim">fails</td></tr><tr><td class="mono">N = 50</td><td class="bar"><span style="width:3%;background:#e0524a"></span></td><td class="c mono" style="color:#e0524a">0.00</td><td class="dim">fails</td></tr><tr><td class="mono">N = 100</td><td class="bar"><span style="width:3%;background:#e0524a"></span></td><td class="c mono" style="color:#e0524a">0.00</td><td class="dim">fails</td></tr></table><p class="dim" style="font-size:12.5px;margin:12px 2px 0">Recomputed live from 4,048 daily returns (book Sharpe 0.66 ann) against a cross-trial Sharpe spread of 1.07. <b style="color:#f0c46a">No reasonable trial count clears the bar — not a demonstrated edge.</b> This is the check most retail systems skip; we built it to catch ourselves before real money ever does.</p></div>
+
+<div class="sec">Live paper trading — two engines running at once</div>
+<div class="grid2">
+  <div class="card">
+    <div style="font-weight:700">📊 Stocks / ETF engine</div>
+    <div class="dim" style="font-size:12px;margin-bottom:6px">TAA asset-class + follow sleeves · swing/position</div>
+    <div class="peq" style="color:#9aa3b2">$9,928 <span>(-0.7%)</span></div>
+    <div class="dim" style="font-size:12.5px;margin-top:8px">2 day(s) of paper history. Holds the TAA ETF book; follow names (13D / analyst / merger) join automatically once the live signal feed refreshes. Benchmark: SPY.</div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700">⚡ Futures day-trading — ORB (MNQ)</div>
+    <div class="dim" style="font-size:12px;margin-bottom:6px">Opening-range breakout · flat overnight · Raschke-style</div>
+    <div class="peq" style="color:#e0524a">$9,780 <span>(-2.2%)</span></div>
+    <div style="margin:6px 0"><svg viewBox="0 0 520 90" width="100%" height="90" preserveAspectRatio="none"><polygon points="0,90 0.0,40.2 14.4,29.8 28.9,36.2 43.3,25.3 57.8,25.4 72.2,20.7 86.7,8.0 101.1,14.8 115.6,14.9 130.0,13.0 144.4,19.5 158.9,26.0 173.3,32.5 187.8,25.9 202.2,32.3 216.7,39.0 231.1,32.8 245.6,39.3 260.0,45.7 274.4,52.0 288.9,58.3 303.3,58.4 317.8,64.7 332.2,58.8 346.7,65.1 361.1,71.4 375.6,71.5 390.0,83.9 404.4,83.9 418.9,84.0 433.3,72.4 447.8,59.5 462.2,55.1 476.7,61.4 491.1,61.6 505.6,67.8 520.0,61.8 520,90" fill="#e0524a" opacity="0.08"/><line x1="0" y1="33.8" x2="520" y2="33.8" stroke="#3d4658" stroke-width="1" stroke-dasharray="4 4"/><polyline points="0.0,40.2 14.4,29.8 28.9,36.2 43.3,25.3 57.8,25.4 72.2,20.7 86.7,8.0 101.1,14.8 115.6,14.9 130.0,13.0 144.4,19.5 158.9,26.0 173.3,32.5 187.8,25.9 202.2,32.3 216.7,39.0 231.1,32.8 245.6,39.3 260.0,45.7 274.4,52.0 288.9,58.3 303.3,58.4 317.8,64.7 332.2,58.8 346.7,65.1 361.1,71.4 375.6,71.5 390.0,83.9 404.4,83.9 418.9,84.0 433.3,72.4 447.8,59.5 462.2,55.1 476.7,61.4 491.1,61.6 505.6,67.8 520.0,61.8" fill="none" stroke="#e0524a" stroke-width="2.5"/><circle cx="520" cy="61.8" r="3.5" fill="#e0524a"/></svg></div>
+    <div class="dim" style="font-size:12.5px">40 trades · 30% win · <b style="color:#e0524a">$-220</b>. Honest read: index-futures day-trading is brutally arbitraged (&lt;1% of day traders show persistent skill). This is the reality check, not a highlight — exactly why we test on paper first.</div>
+  </div>
+</div>
+
+<div class="sec">The follow-along thesis in action — out-of-sample</div>
+<div class="card">
+  <p style="margin:0 0 8px;font-size:14px"><b>9 open position(s)</b> tracked live from real analyst calls, entered on <b>disclosure date</b> (never the source's fill) — the clean out-of-sample test. First verdicts mature ~mid-October 2026.</p>
+  <span class="chip"><b>TXN</b> <span class="dim">Susquehanna</span></span><span class="chip"><b>EOG</b> <span class="dim">Susquehanna</span></span><span class="chip"><b>COP</b> <span class="dim">Susquehanna</span></span><span class="chip"><b>ANET</b> <span class="dim">Needham</span></span><span class="chip"><b>ABBV</b> <span class="dim">Canaccord Genuity</span></span><span class="chip"><b>PM</b> <span class="dim">Needham</span></span><span class="chip"><b>NOW</b> <span class="dim">Needham</span></span><span class="chip"><b>AMZN</b> <span class="dim">Wedbush</span></span><span class="chip"><b>GOOGL</b> <span class="dim">Wedbush</span></span>
+</div>
+
+<div class="sec">How sources earn their way in — audition funnel</div>
+<div class="card">
+  <p style="margin:0 0 10px;font-size:14px"><b>24 signals auditioned → 9 survived → 6 rejected as noise.</b> Every followed trader/signal is paper-tracked and scored <b>before</b> it can touch the book. Most get rejected — that's the point.</p>
+  <table><tr><th>Rejected source</th><th>Verdict</th><th class="c">Sharpe</th></tr><tr><td>Ron L Wyden</td><td><span class="pill" style="background:#6b728022;color:#8a93a6;border:1px solid #6b728055">rejected · noise</span></td><td class="c mono dim">-2.25</td></tr><tr><td>Congress all</td><td><span class="pill" style="background:#6b728022;color:#8a93a6;border:1px solid #6b728055">rejected · noise</span></td><td class="c mono dim">-2.16</td></tr><tr><td>pead</td><td><span class="pill" style="background:#6b728022;color:#8a93a6;border:1px solid #6b728055">rejected · noise</span></td><td class="c mono dim">-1.26</td></tr><tr><td>styx1003</td><td><span class="pill" style="background:#6b728022;color:#8a93a6;border:1px solid #6b728055">rejected · noise</span></td><td class="c mono dim">-1.09</td></tr><tr><td>8K buyback</td><td><span class="pill" style="background:#6b728022;color:#8a93a6;border:1px solid #6b728055">rejected · noise</span></td><td class="c mono dim">-0.45</td></tr><tr><td>VIC all</td><td><span class="pill" style="background:#6b728022;color:#8a93a6;border:1px solid #6b728055">rejected · noise</span></td><td class="c mono dim">-0.39</td></tr></table>
+  <p class="dim" style="font-size:12.5px;margin:11px 2px 0">Nothing gets adopted on reputation — only on an out-of-sample score. Congress trades, buyback filings, and idea forums were all tested and cut.</p>
+</div>
+
+<div class="sec">Autonomy ladder — where trust stands today</div>
+<div class="ladder">
+  <div class="rung now"><b>T0 · here</b><br><span class="dim">paper, human-proposed, $0</span></div>
+  <div class="rung"><b>T1</b><br><span class="dim">paper, autonomous</span></div>
+  <div class="rung"><b>T2</b><br><span class="dim">live, small, human-approved each trade</span></div>
+  <div class="rung"><b>T3</b><br><span class="dim">live, autonomous within hard rails</span></div>
+  <div class="rung"><b>T4</b><br><span class="dim">full portfolio, rails permanent</span></div>
+</div>
+<p class="dim" style="font-size:12.5px;margin:10px 2px 0">Promotion requires a documented track record at the current tier <b>and</b> written approval. Real money never moves before T3 is formally granted. Rails at every live tier: max position %, daily-loss circuit breaker, kill switch.</p>
+
+<div class="foot">
+Everything shown is <b>simulated</b> — no broker is armed, no real capital is at risk, $0 live. Past/backtested performance is not indicative of future results and the book is explicitly <b>not</b> a confirmed edge (see the Deflated-Sharpe gate above). This page is regenerated by the daemon every ~20 min from live data and auto-refreshes every 3 minutes.<br>
+Ys live system overview · rendered 2026-07-23 16:27:30 · T0 paper.
+</div>
+
+</div></body></html>
